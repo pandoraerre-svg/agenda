@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gothic Paper & Ink - Panel Maestro & Agenda</title>
+  <title>Gothic Paper & Ink - Agenda Digital</title>
   
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
@@ -11,7 +11,7 @@
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
-  <!-- Google Fonts: Góticas, Victorianas y Manuscritas -->
+  <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700&family=Cinzel:wght@500;700&family=Great+Vibes&family=MedievalSharp&family=UnfrakturMaguntia&family=Uncial+Antiqua&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
@@ -50,32 +50,19 @@
       background-color: var(--color-bg);
       color: var(--color-text);
       font-family: var(--font-family);
-      transition: background-color 0.3s, color 0.3s;
+      margin: 0;
+      padding: 0;
+      transition: color 0.3s ease, background-color 0.3s ease;
     }
 
-    .font-custom {
-      font-family: var(--font-family);
-    }
-
-    /* Patrones de Papel */
-    .paper-grid {
-      background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1px, transparent 0);
-      background-size: 20px 20px;
-    }
+    .font-custom { font-family: var(--font-family); }
     .paper-lines {
       background-image: linear-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 0);
       background-size: 100% 28px;
     }
-    .paper-dots {
-      background-image: radial-gradient(rgba(255, 255, 255, 0.2) 1.5px, transparent 0);
-      background-size: 16px 16px;
-    }
-
-    /* Temas de Fondo de Hoja */
     .sheet-theme-vampiric {
       background-image: linear-gradient(rgba(15, 10, 21, 0.85), rgba(15, 10, 21, 0.85)), url('https://images.unsplash.com/photo-1509198397868-475647b2a1e5?auto=format&fit=crop&w=1000&q=80');
       background-size: cover;
-      background-position: center;
     }
     .sheet-theme-herbarium {
       background-color: #241408;
@@ -85,36 +72,24 @@
     .sheet-theme-crimson {
       background-color: #1a050a;
       border: 3px double #991b1b;
-      box-shadow: inset 0 0 30px rgba(153, 27, 27, 0.3);
     }
-
-    /* Scrollbar */
     ::-webkit-scrollbar { width: 6px; }
     ::-webkit-scrollbar-track { background: rgba(0,0,0,0.2); }
     ::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 3px; }
-
-    .interactive-element {
-      user-select: none;
-      touch-action: none;
-      cursor: grab;
-    }
-    .interactive-element:active { cursor: grabbing; }
   </style>
 </head>
 <body class="min-h-screen flex flex-col md:flex-row overflow-x-hidden">
 
-  <!-- BARRA LATERAL / NAVEGACIÓN Y TO-DO LIST INTEGRADA -->
-  <aside class="w-full md:w-80 bg-black/50 backdrop-blur-md border-b md:border-b-0 md:border-r border-purple-900/40 p-4 flex flex-col justify-between z-20">
+  <!-- BARRA LATERAL -->
+  <aside class="w-full md:w-80 bg-black/60 backdrop-blur-md border-b md:border-b-0 md:border-r border-purple-900/40 p-4 flex flex-col justify-between z-20">
     <div>
-      <!-- Título -->
       <div class="text-center py-3 border-b border-purple-900/30 mb-4">
         <h1 class="text-xl font-bold tracking-widest text-purple-400 font-custom flex items-center justify-center gap-2">
           <i class="fa-solid fa-book-skull"></i> VERBENA
         </h1>
-        <p class="text-[10px] text-purple-300/60 tracking-wider uppercase mt-1">Gothic Paper & Ink</p>
+        <p class="text-[10px] text-purple-300/60 uppercase mt-1">Gothic Paper & Ink</p>
       </div>
 
-      <!-- Menú de Vistas -->
       <nav class="space-y-1.5 mb-6 text-xs">
         <button onclick="switchView('daily')" id="btn-daily" class="w-full text-left px-3 py-2.5 rounded-lg flex items-center gap-3 bg-purple-900/30 text-purple-200 border border-purple-500/30">
           <i class="fa-solid fa-calendar-day w-4 text-purple-400"></i> Vista Diaria
@@ -124,9 +99,6 @@
         </button>
         <button onclick="switchView('monthly')" id="btn-monthly" class="w-full text-left px-3 py-2.5 rounded-lg flex items-center gap-3 hover:bg-purple-900/20 text-purple-300">
           <i class="fa-solid fa-calendar-days w-4 text-purple-400"></i> Vista Mensual
-        </button>
-        <button onclick="switchView('projects')" id="btn-projects" class="w-full text-left px-3 py-2.5 rounded-lg flex items-center gap-3 hover:bg-purple-900/20 text-purple-300">
-          <i class="fa-solid fa-list-check w-4 text-purple-400"></i> Proyectos VERBENA
         </button>
         <button onclick="switchView('admin')" id="btn-admin" class="w-full text-left px-3 py-2.5 rounded-lg flex items-center gap-3 bg-purple-950/60 hover:bg-purple-900/50 text-purple-200 border border-purple-700/50">
           <i class="fa-solid fa-gears w-4 text-purple-300"></i> Panel de Administración
@@ -141,11 +113,10 @@
           </h3>
           <span id="todo-counter" class="text-[10px] bg-purple-950 border border-purple-800 px-1.5 py-0.5 rounded text-purple-300">0</span>
         </div>
-        <div id="sidebar-todo-list" class="space-y-2 max-h-[240px] overflow-y-auto pr-1 text-xs"></div>
+        <div id="sidebar-todo-list" class="space-y-2 max-h-[220px] overflow-y-auto pr-1 text-xs"></div>
       </div>
     </div>
 
-    <!-- Leyenda de Categorías Dinámica -->
     <div class="mt-4 pt-3 border-t border-purple-900/30">
       <h3 class="text-[10px] uppercase tracking-wider text-purple-400/80 mb-2 font-semibold">Categorías Activas</h3>
       <div id="sidebar-categories" class="flex flex-wrap gap-1.5 text-[11px]"></div>
@@ -154,8 +125,293 @@
 
   <!-- CONTENIDO PRINCIPAL -->
   <main class="flex-1 flex flex-col h-screen overflow-y-auto relative">
-    
-    <!-- BARRA SUPERIOR -->
-    <header class="bg-black/30 backdrop-blur-sm p-4 border-b border-purple-900/30 flex flex-wrap items-center justify-between gap-4 z-10">
+    <header class="bg-black/40 backdrop-blur-sm p-4 border-b border-purple-900/30 flex flex-wrap items-center justify-between gap-4 z-10">
       <div class="flex items-center gap-4">
-        <h2 id="current-view-title" class="text-lg font-bold text
+        <h2 id="current-view-title" class="text-lg font-bold text-purple-200">Vista Diaria</h2>
+        <input type="date" id="date-picker" onchange="changeDate(this.value)" class="bg-purple-950/60 border border-purple-800/50 rounded-lg px-3 py-1 text-sm text-purple-200 focus:outline-none">
+      </div>
+      <div class="flex items-center gap-2">
+        <button onclick="openModal('modal-task')" class="bg-purple-900/60 hover:bg-purple-800 text-purple-200 px-3 py-1.5 rounded-lg text-xs border border-purple-500/40 flex items-center gap-2 transition">
+          <i class="fa-solid fa-plus"></i> Nueva Tarea/Cita
+        </button>
+        <button onclick="openModal('modal-sticker')" class="bg-purple-950/80 hover:bg-purple-900 text-purple-200 px-3 py-1.5 rounded-lg text-xs border border-purple-700/50 flex items-center gap-2 transition">
+          <i class="fa-solid fa-note-sticky"></i> + Sticker / Post-it
+        </button>
+      </div>
+    </header>
+
+    <div class="flex-1 p-4 md:p-8 flex justify-center items-start overflow-y-auto">
+      <div id="journal-sheet" class="w-full max-w-5xl min-h-[850px] bg-goth-paper rounded-2xl shadow-2xl border border-purple-900/40 p-6 md:p-8 relative overflow-hidden paper-lines transition-all">
+        
+        <!-- VISTA DIARIA -->
+        <div id="view-daily" class="view-panel space-y-6">
+          <div class="flex justify-between items-center border-b border-purple-900/40 pb-4">
+            <div>
+              <h3 id="daily-date-display" class="text-2xl font-bold font-custom" style="color: var(--color-text);">Cargando fecha...</h3>
+              <p class="text-xs opacity-70">Planificador del Día & Notas Libres</p>
+            </div>
+            <span class="text-xs bg-purple-950/80 border border-purple-800/50 px-2 py-1 rounded-md">
+              <i class="fa-solid fa-cloud"></i> Autoguardado Activo
+            </span>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div class="space-y-4">
+              <h4 class="text-sm font-bold uppercase tracking-wider border-b border-purple-900/30 pb-1">Prioridades & Tareas</h4>
+              <div id="daily-tasks-list" class="space-y-2 min-h-[200px]"></div>
+            </div>
+            <div class="md:col-span-2 space-y-2 border-l md:border-purple-900/30 md:pl-6">
+              <h4 class="text-sm font-bold uppercase tracking-wider border-b border-purple-900/30 pb-1">Horario del Día</h4>
+              <div id="hourly-schedule" class="space-y-1 max-h-[550px] overflow-y-auto pr-2"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- VISTA SEMANAL -->
+        <div id="view-weekly" class="view-panel hidden space-y-4">
+          <div class="flex justify-between items-center border-b border-purple-900/40 pb-3">
+            <h3 id="weekly-header-title" class="text-xl font-bold font-custom">Planificador Semanal</h3>
+          </div>
+          <div id="weekly-grid" class="grid grid-cols-1 md:grid-cols-7 gap-3 min-h-[600px]"></div>
+        </div>
+
+        <!-- VISTA MENSUAL -->
+        <div id="view-monthly" class="view-panel hidden space-y-4">
+          <div class="flex justify-between items-center border-b border-purple-900/40 pb-3">
+            <h3 id="monthly-header-title" class="text-xl font-bold font-custom">Calendario Mensual</h3>
+          </div>
+          <div class="grid grid-cols-7 gap-2 text-center text-xs font-bold border-b border-purple-900/30 pb-2 opacity-80">
+            <div>DOM</div><div>LUN</div><div>MAR</div><div>MIÉ</div><div>JUE</div><div>VIE</div><div>SÁB</div>
+          </div>
+          <div id="monthly-calendar" class="grid grid-cols-7 gap-2 min-h-[550px]"></div>
+        </div>
+
+        <!-- PANEL DE ADMINISTRACIÓN -->
+        <div id="view-admin" class="view-panel hidden space-y-6 text-xs">
+          <div class="border-b border-purple-900/40 pb-3 flex justify-between items-center">
+            <h3 class="text-xl font-bold font-custom"><i class="fa-solid fa-gears"></i> Panel de Administración Maestro</h3>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="bg-black/30 p-4 rounded-xl border border-purple-900/30 space-y-3">
+              <h4 class="font-bold text-sm border-b border-purple-900/30 pb-2">Categorías</h4>
+              <div class="flex gap-2">
+                <input type="text" id="new-cat-name" placeholder="Nombre" class="flex-1 bg-purple-950/60 border border-purple-800 rounded p-1.5">
+                <input type="color" id="new-cat-color" value="#a855f7" class="bg-transparent cursor-pointer w-10 h-8">
+                <button onclick="addCategory()" class="bg-purple-900 px-3 py-1.5 rounded font-bold">Añadir</button>
+              </div>
+              <div id="admin-categories-list" class="space-y-1.5 max-h-36 overflow-y-auto"></div>
+            </div>
+            
+            <div class="bg-black/30 p-4 rounded-xl border border-purple-900/30 space-y-3 md:col-span-2">
+              <h4 class="font-bold text-sm border-b border-purple-900/30 pb-2">Personalización de Temas y Color de Fuente</h4>
+              <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div>
+                  <label class="block mb-1">Fondo General:</label>
+                  <input type="color" id="picker-bg" value="#0f0a15" onchange="updateThemeColor('--color-bg', this.value)" class="w-full h-8 bg-transparent cursor-pointer rounded">
+                </div>
+                <div>
+                  <label class="block mb-1">Color de la Hoja:</label>
+                  <input type="color" id="picker-paper" value="#181124" onchange="updateThemeColor('--color-paper', this.value)" class="w-full h-8 bg-transparent cursor-pointer rounded">
+                </div>
+                <div>
+                  <label class="block mb-1">Color Principal:</label>
+                  <input type="color" id="picker-primary" value="#7e22ce" onchange="updateThemeColor('--color-primary', this.value)" class="w-full h-8 bg-transparent cursor-pointer rounded">
+                </div>
+                <div>
+                  <label class="block mb-1 font-bold text-purple-300">Color de la Fuente (Texto):</label>
+                  <input type="color" id="picker-text" value="#f3e8ff" onchange="updateThemeColor('--color-text', this.value)" class="w-full h-8 bg-transparent cursor-pointer rounded border border-purple-500">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- LIENZO DE STICKERS -->
+        <div id="stickers-layer" class="absolute inset-0 pointer-events-none z-10"></div>
+      </div>
+    </div>
+  </main>
+
+  <!-- MODAL TAREA -->
+  <div id="modal-task" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4 z-50">
+    <div class="bg-goth-paper border border-purple-900/60 rounded-2xl w-full max-w-md p-6 space-y-4 text-xs">
+      <div class="flex justify-between items-center border-b border-purple-900/40 pb-2">
+        <h3 id="modal-task-title" class="font-bold text-sm">Nueva Tarea / Cita</h3>
+        <button onclick="closeModal('modal-task')"><i class="fa-solid fa-xmark"></i></button>
+      </div>
+      <form id="form-task" onsubmit="saveTask(event)" class="space-y-3">
+        <input type="hidden" id="task-edit-id">
+        <div><label class="block mb-1">Título:</label><input type="text" id="task-title" required class="w-full bg-black/40 border border-purple-800 rounded-lg p-2"></div>
+        <div class="grid grid-cols-2 gap-2">
+          <div><label class="block mb-1">Categoría:</label><select id="task-category" class="w-full bg-black/40 border border-purple-800 rounded-lg p-2"></select></div>
+          <div><label class="block mb-1">Hora:</label><input type="time" id="task-time" class="w-full bg-black/40 border border-purple-800 rounded-lg p-2"></div>
+        </div>
+        <div><label class="block mb-1">Subtareas (separadas por coma):</label><input type="text" id="task-subtasks" class="w-full bg-black/40 border border-purple-800 rounded-lg p-2"></div>
+        <button type="submit" class="w-full bg-purple-900 hover:bg-purple-800 py-2 rounded-lg font-bold">Guardar</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- SCRIPT JS -->
+  <script>
+    let currentDate = new Date().toISOString().split('T')[0];
+    let appData = JSON.parse(localStorage.getItem('gothic_agenda_master_db')) || {
+      tasks: [], stickers: [], customStickers: [],
+      categories: [
+        { id: 'personal', name: 'Citas Personales', color: '#a855f7' },
+        { id: 'verbena', name: 'VERBENA', color: '#6b21a8' },
+        { id: 'familia', name: 'Familia / Hogar', color: '#1e293b' }
+      ],
+      tags: ['Urgente', 'Diseño'],
+      themeSettings: { font: "'Cinzel', serif", colors: {}, sheetClass: 'paper-lines' }
+    };
+    let currentActiveView = 'daily';
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.getElementById('date-picker').value = currentDate;
+      applySavedSettings();
+      renderCategoriesDropdown();
+      renderSidebarCategories();
+      renderCurrentView();
+      generateScheduleSlots();
+      renderSidebarTodoList();
+    });
+
+    function switchView(viewName) {
+      currentActiveView = viewName;
+      document.querySelectorAll('.view-panel').forEach(el => el.classList.add('hidden'));
+      document.getElementById(`view-${viewName}`).classList.remove('hidden');
+      document.getElementById('current-view-title').innerText = viewName.toUpperCase();
+      renderCurrentView();
+    }
+
+    function changeDate(val) { currentDate = val; renderCurrentView(); }
+
+    function generateScheduleSlots() {
+      const container = document.getElementById('hourly-schedule');
+      container.innerHTML = '';
+      for(let hour = 6; hour <= 22; hour++) {
+        const timeString = `${hour.toString().padStart(2, '0')}:00`;
+        container.innerHTML += `<div class="flex items-center gap-3 py-1 border-b border-purple-900/20 text-xs"><span class="w-12 font-mono opacity-70">${timeString}</span><div class="flex-1 min-h-[28px]"></div></div>`;
+      }
+    }
+
+    function renderCurrentView() {
+      const dateObj = new Date(currentDate + 'T00:00:00');
+      if(currentActiveView === 'daily') renderDailyView(dateObj);
+      else if(currentActiveView === 'weekly') renderWeeklyView(dateObj);
+      else if(currentActiveView === 'monthly') renderMonthlyView(dateObj);
+      renderSidebarTodoList();
+    }
+
+    function renderDailyView(dateObj) {
+      document.getElementById('daily-date-display').innerText = dateObj.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+      const tasksList = document.getElementById('daily-tasks-list');
+      tasksList.innerHTML = '';
+      appData.tasks.filter(t => t.date === currentDate).forEach(task => {
+        const cat = appData.categories.find(c => c.id === task.category) || { color: '#7e22ce', name: 'General' };
+        tasksList.innerHTML += `<div class="p-2.5 rounded-lg border border-purple-800/40 bg-black/20 flex justify-between items-center">
+          <div class="flex items-center gap-2"><input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask('${task.id}')"><span class="${task.completed ? 'line-through opacity-50' : ''}">${task.title}</span><span class="text-[9px] px-1.5 py-0.5 rounded text-white" style="background-color: ${cat.color}">${cat.name}</span></div>
+          <button onclick="deleteTask('${task.id}')" class="text-red-400"><i class="fa-solid fa-trash"></i></button></div>`;
+      });
+    }
+
+    function renderWeeklyView(dateObj) {
+      const grid = document.getElementById('weekly-grid');
+      grid.innerHTML = '';
+      const startOfWeek = new Date(dateObj);
+      startOfWeek.setDate(dateObj.getDate() - (dateObj.getDay() === 0 ? 6 : dateObj.getDay() - 1));
+      for (let i = 0; i < 7; i++) {
+        const loopDate = new Date(startOfWeek); loopDate.setDate(startOfWeek.getDate() + i);
+        const isoString = loopDate.toISOString().split('T')[0];
+        grid.innerHTML += `<div onclick="changeDate('${isoString}'); switchView('daily')" class="bg-black/30 border border-purple-950 rounded-xl p-2 cursor-pointer hover:border-purple-600">
+          <span class="text-[10px] font-bold opacity-80">${loopDate.toLocaleDateString('es-ES', {weekday:'short'})} ${loopDate.getDate()}</span>
+          <div class="mt-2 space-y-1">${appData.tasks.filter(t => t.date === isoString).map(t=>`<div class="text-[10px] bg-purple-950/60 p-1 rounded truncate">${t.title}</div>`).join('')}</div></div>`;
+      }
+    }
+
+    function renderMonthlyView(dateObj) {
+      const calendar = document.getElementById('monthly-calendar');
+      calendar.innerHTML = '';
+      const year = dateObj.getFullYear(), month = dateObj.getMonth();
+      const firstDay = new Date(year, month, 1).getDay(), totalDays = new Date(year, month + 1, 0).getDate();
+      for (let i = 0; i < firstDay; i++) calendar.innerHTML += `<div></div>`;
+      for (let day = 1; day <= totalDays; day++) {
+        const isoString = new Date(year, month, day).toISOString().split('T')[0];
+        const dayTasks = appData.tasks.filter(t => t.date === isoString);
+        calendar.innerHTML += `<div onclick="changeDate('${isoString}'); switchView('daily')" class="bg-black/30 border border-purple-900/30 rounded p-1 min-h-[60px] cursor-pointer hover:border-purple-500">
+          <span class="text-xs font-bold">${day}</span><div class="flex gap-1 mt-1">${dayTasks.map(t=>`<span class="w-2 h-2 rounded-full" style="background-color: ${appData.categories.find(c=>c.id===t.category)?.color || '#7e22ce'}"></span>`).join('')}</div></div>`;
+      }
+    }
+
+    function renderSidebarTodoList() {
+      const container = document.getElementById('sidebar-todo-list');
+      container.innerHTML = '';
+      appData.tasks.forEach(task => {
+        container.innerHTML += `<div class="p-1 bg-black/30 rounded border border-purple-900/30 flex items-center gap-2"><input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask('${task.id}')"><span class="truncate ${task.completed ? 'line-through opacity-50' : ''}">${task.title}</span></div>`;
+      });
+      document.getElementById('todo-counter').innerText = appData.tasks.length;
+    }
+
+    function addCategory() {
+      const name = document.getElementById('new-cat-name').value, color = document.getElementById('new-cat-color').value;
+      if(!name) return;
+      appData.categories.push({ id: name.toLowerCase(), name, color });
+      saveData(); renderCategoriesDropdown(); renderSidebarCategories();
+    }
+
+    function renderCategoriesDropdown() {
+      const select = document.getElementById('task-category');
+      select.innerHTML = appData.categories.map(c => `<option value="${c.id}">${c.name}</option>`).join('');
+    }
+
+    function renderSidebarCategories() {
+      document.getElementById('sidebar-categories').innerHTML = appData.categories.map(c => `<div class="flex items-center gap-1 px-1.5 py-0.5 rounded bg-black/30"><span class="w-2 h-2 rounded-full" style="background-color:${c.color}"></span><span>${c.name}</span></div>`).join('');
+    }
+
+    function saveTask(e) {
+      e.preventDefault();
+      appData.tasks.push({
+        id: Date.now().toString(),
+        title: document.getElementById('task-title').value,
+        category: document.getElementById('task-category').value,
+        time: document.getElementById('task-time').value,
+        subtasks: document.getElementById('task-subtasks').value.split(',').filter(s=>s.trim()).map(text=>({text:text.trim(), completed:false})),
+        date: currentDate, completed: false
+      });
+      saveData(); renderCurrentView(); closeModal('modal-task'); document.getElementById('form-task').reset();
+    }
+
+    function toggleTask(id) {
+      const t = appData.tasks.find(x => x.id === id);
+      if(t) { t.completed = !t.completed; saveData(); renderCurrentView(); }
+    }
+
+    function deleteTask(id) {
+      appData.tasks = appData.tasks.filter(t => t.id !== id);
+      saveData(); renderCurrentView();
+    }
+
+    function updateThemeColor(v, val) { 
+      document.documentElement.style.setProperty(v, val); 
+      appData.themeSettings.colors[v] = val; 
+      saveData(); 
+    }
+
+    function applySavedSettings() { 
+      if(appData.themeSettings && appData.themeSettings.colors) {
+        Object.keys(appData.themeSettings.colors).forEach(k => {
+          document.documentElement.style.setProperty(k, appData.themeSettings.colors[k]);
+          if(k === '--color-text') {
+            const picker = document.getElementById('picker-text');
+            if(picker) picker.value = appData.themeSettings.colors[k];
+          }
+        });
+      } 
+    }
+
+    function openModal(id) { document.getElementById(id).classList.remove('hidden'); document.getElementById(id).classList.add('flex'); }
+    function closeModal(id) { document.getElementById(id).classList.add('hidden'); document.getElementById(id).classList.remove('flex'); }
+    function saveData() { localStorage.setItem('gothic_agenda_master_db', JSON.stringify(appData)); }
+  </script>
+</body>
+</html>
